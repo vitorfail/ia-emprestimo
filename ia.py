@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import joblib
+import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier # Algoritmo Random Forest
 from sklearn.metrics import r2_score # Utilizado para medir a acuracia do modelo preditivo
 from sklearn.model_selection import GridSearchCV
@@ -17,11 +19,13 @@ def ia():
     if request.json == None or request.json == False:
         return 'Não há nehum parâmetro. Por favor envie a descriçaõ da imagem'
     else:
-        array = [0.5       , 0.82608696, 0.        , 0.        , 1.        ,
-        1.        , 0.        , 0.        , 0.        , 0.09859155,
-        0.        , 0.1039604 , 0.        , 0.        , 0.93023256]
+        dados = np.array([request.json['dados']])
+        dados_array = pd.DataFrame(dados, columns=["UF","IDADE","ESCOLARIDADE","ESTADO_CIVIL","QT_FILHOS",
+        "CASA_PROPRIA","QT_IMOVEIS","VL_IMOVEIS","OUTRA_RENDA_VALOR",
+        "TEMPO_ULTIMO_EMPREGO_MESES","TRABALHANDO_ATUALMENTE","ULTIMO_SALARIO",
+        "QT_CARROS","VALOR_TABELA_CARROS","SCORE_CREDITO",])
         ia = joblib.load('emprestimo.pkl')
-        #resultado = ia.predict([])
-        return request.json
+        resultado = ia.predict(dados_array)
+        return resultado[0]
 if __name__ == '__main__': 
   app.run()
