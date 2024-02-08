@@ -7,6 +7,7 @@ from sklearn.ensemble import RandomForestClassifier # Algoritmo Random Forest
 from sklearn.metrics import r2_score # Utilizado para medir a acuracia do modelo preditivo
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import LabelEncoder # Utilizado para fazer o OneHotEncoding
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +25,10 @@ def ia():
         "CASA_PROPRIA","QT_IMOVEIS","VL_IMOVEIS","OUTRA_RENDA_VALOR",
         "TEMPO_ULTIMO_EMPREGO_MESES","TRABALHANDO_ATUALMENTE","ULTIMO_SALARIO",
         "QT_CARROS","VALOR_TABELA_CARROS","SCORE_CREDITO",])
+        if os.path.exists('index.py'):
+            print("encontrei")
+        else:
+            print(f'O arquivo {"emprestimo.pkl"} não foi encontrado.')
         ia = joblib.load('emprestimo.pkl')
         resultado = ia.predict(dados_array)
         return resultado[0]
