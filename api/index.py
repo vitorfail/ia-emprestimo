@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from sklearn.ensemble import RandomForestClassifier
 import joblib
 import pandas as pd
 import numpy as np
+
 import os
 
 app = Flask(__name__)
