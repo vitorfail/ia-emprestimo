@@ -25,12 +25,10 @@ def ia():
         "CASA_PROPRIA","QT_IMOVEIS","VL_IMOVEIS","OUTRA_RENDA_VALOR",
         "TEMPO_ULTIMO_EMPREGO_MESES","TRABALHANDO_ATUALMENTE","ULTIMO_SALARIO",
         "QT_CARROS","VALOR_TABELA_CARROS","SCORE_CREDITO",])
-        if os.path.exists('index.py'):
-            print("encontrei")
-        else:
-            print(f'O arquivo {"emprestimo.pkl"} não foi encontrado.')
-        ia = joblib.load('emprestimo.pkl')
+        ia = joblib.load(os.path.join(os.getcwd(),"api/emprestimo.pkl"))
+        print(ia)
         resultado = ia.predict(dados_array)
+        print(resultado[0])
         return resultado[0]
 if __name__ == '__main__': 
   app.run()
